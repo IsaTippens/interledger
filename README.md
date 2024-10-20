@@ -9,11 +9,8 @@ Our idea connects tourists with local businesses to foster cultural integration 
 4. [Installation](#installation)
    - [Prerequisites](#prerequisites)
    - [Setup](#setup)
-5. [API Documentation](#api-documentation)
-   - [GET /api/businesses](#get-apibusinesses)
-6. [Usage](#usage)
-7. [Contributing](#contributing)
-8. [License](#license)
+5. [Usage](#usage)
+
 
 ## Introduction
 
