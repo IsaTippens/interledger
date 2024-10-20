@@ -11,4 +11,4 @@ INSERT INTO business (business_name, business_address, category, amount, wallet_
 ('Kidz Care', '909 Caring Ct', 'Babysitting', 200.00, "https://ilp.interledger-test.dev/isapay2"),
 ('Gourmet Delights', '111 Feast St', 'Catering', 400.00, "https://ilp.interledger-test.dev/isapay2"),
 ('Savory Bites', '222 Dish Dr', 'Catering', 350.00, "https://ilp.interledger-test.dev/isapay2"),
-('Party Platters', '333 Buffet Blvd', 'Catering', 500.00, "https://ilp.interledger-test.dev/isapay2"),
+('Party Platters', '333 Buffet Blvd', 'Catering', 500.00, "https://ilp.interledger-test.dev/isapay2");
