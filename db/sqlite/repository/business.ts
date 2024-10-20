@@ -18,6 +18,16 @@ export class BusinessRepository {
         }));
     }
 
+    async getBusinessByCatergory(category: string): Promise<BusinessModel | undefined> {
+        const sql = `SELECT * FROM business WHERE category = ?`;
+        return new Promise((resolve, reject) => this.connection.get(sql, [category], (err, row) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(row as BusinessModel);
+        }));
+    }
+
     async getBusinesses(): Promise<BusinessModel[]> {
         const sql = `SELECT * FROM business`;
         return new Promise((resolve, reject) => this.connection.all(sql, [], (err, rows) => {
