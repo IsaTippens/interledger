@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS business (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     business_name TEXT NOT NULL,
     business_address TEXT NOT NULL,
+    amount REAL NOT NULL,
     category TEXT NOT NULL,
-    phone TEXT NOT NULL,
-    email TEXT NOT NULL
+    wallet_url TEXT NOT NULL
 );

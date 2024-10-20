@@ -1,6 +1,9 @@
 import {Router} from 'express';
 
-const endpoint = "/data";
+import client from '../../db/sqlite/database'
+import { BusinessRepository } from '../../db/sqlite/repository/business'
+import { Database } from 'sqlite';
+
 
 const router = Router();
 
@@ -8,8 +11,11 @@ const router = Router();
 // Get all businesses
 // Response: { businesses: Business[] }
 
-router.get(endpoint + '/businesses', (req, res) => {
-    res.send('Hello World!');
+router.get('/businesses', (req, res) => {
+    const businessRepo = new BusinessRepository(client);
+    businessRepo.getBusinesses().then((businesses) => {
+        res.json({ businesses });
+    });
 });
 
 export default router;
