@@ -43,15 +43,30 @@ Ensure you have the following tools installed:
 ### Setup
 
 1. Clone the repository:
-   ```bash
+```bash
    git clone https://github.com/IsaTippens/interledger.git
    cd interledger
+```
 2. Install the dependencies:
-   ```bash
+ ```bash
+   # backend dependencies
    npm install
+   # react dependencies
+   cd frontend
+   npm install
+   # initialise database
+   npx ts-node ./testing/test_db.ts
+```
+
 3. Start the Development Server:
-   ```bash
+```bash
+   # Terminal #1
+   npx ts-node ./backend/app.ts
+
+   # Terminal #2
+   cd frontend
    npm start
+```
 
 ### Usage
 1. Choose a service from categories like cleaning, gardening, babysitting, and catering.
