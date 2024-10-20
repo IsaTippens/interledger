@@ -20,4 +20,13 @@ router.get('/businesses', (req, res) => {
     });
 });
 
+router.get('/businesses/category', (req, res) => {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+
+    const businessRepo = new BusinessRepository(client);
+    businessRepo.getBusinesses().then((businesses) => {
+        res.json({ businesses });
+    });
+});
+
 export default router;
