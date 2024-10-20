@@ -1,4 +1,4 @@
-# Local Roots - Marketplace for Tourists & Local Businesses
+# Local Roots 
 
 Our idea connects tourists with local businesses to foster cultural integration and support economic growth. It prioritises environmental sustainability and promotes responsible tourism, by creating a platform that allow tourists in a given area to engage with the local businesses and make payments via the application with ease.
 
