@@ -8,7 +8,7 @@ const paymentRouter = Router();
 // Request body: { businessId: number, userWalletAddress: string }
 // Response: { confirmationLink: string,  }
 
-paymentRouter.post(endpoint + "/start", (req, res) => {
+paymentRouter.post("/start", (req, res) => {
     let { businessId, userWalletAddress } = req.body;
     if (typeof businessId !== 'number' || typeof userWalletAddress !== 'string') {
         res.status(400).send('Invalid input');
@@ -22,7 +22,7 @@ paymentRouter.post(endpoint + "/start", (req, res) => {
 // Request body: { businessId: number, userWalletAddress: string }
 // Response: { message: string }
 
-paymentRouter.post(endpoint + "/complete", (req, res) => {
+paymentRouter.post("/complete", (req, res) => {
     let { businessId, userWalletAddress } = req.body;
     if (typeof businessId !== 'number' || typeof userWalletAddress !== 'string') {
         res.status(400).send('Invalid input');
