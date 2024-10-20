@@ -1,6 +1,6 @@
-import { createAuthenticatedClient, createUnauthenticatedClient, WalletAddress, AuthenticatedClient, UnauthenticatedClient, Grant, Quote, IncomingPaymentWithPaymentMethods, PendingGrant, OutgoingPaymentWithSpentAmounts} from '@interledger/open-payments';
+import { createUnauthenticatedClient, WalletAddress, AuthenticatedClient, UnauthenticatedClient, Grant, Quote, IncomingPaymentWithPaymentMethods, PendingGrant, OutgoingPaymentWithSpentAmounts} from '@interledger/open-payments';
 
-async function getWalletInfo(url: string) : Promise<WalletAddress> {
+export async function getWalletInfo(url: string) : Promise<WalletAddress> {
     const client = await createUnauthenticatedClient({});
     const walletAddress = await client.walletAddress.get({
         url: url
@@ -8,7 +8,7 @@ async function getWalletInfo(url: string) : Promise<WalletAddress> {
     return walletAddress;
 }
 
-async function getIncomingPaymentGrant(authClient: AuthenticatedClient, receiverWalletAddress: WalletAddress) : Promise<Grant> {
+export async function getIncomingPaymentGrant(authClient: AuthenticatedClient, receiverWalletAddress: WalletAddress) : Promise<Grant> {
     const grant: any = await authClient.grant.request(
         {
             url: receiverWalletAddress.authServer,
@@ -35,7 +35,7 @@ export interface IncomingPaymentArgs {
     assetScale: number;
 }
 
-async function createIncomingPayment(authClient: AuthenticatedClient, args: IncomingPaymentArgs) : Promise<IncomingPaymentWithPaymentMethods> {
+export async function createIncomingPayment(authClient: AuthenticatedClient, args: IncomingPaymentArgs) : Promise<IncomingPaymentWithPaymentMethods> {
     let { grant, receiverWalletAddress } = args;
     const incomingPayment = await authClient.incomingPayment.create(
         {
@@ -54,7 +54,7 @@ async function createIncomingPayment(authClient: AuthenticatedClient, args: Inco
     return incomingPayment;
 }
 
-async function getQuoteGrant(authClient: AuthenticatedClient, senderWalletAddress: WalletAddress): Promise<Grant> {
+export async function getQuoteGrant(authClient: AuthenticatedClient, senderWalletAddress: WalletAddress): Promise<Grant> {
     const grant: any = await authClient.grant.request(
         {
             url: senderWalletAddress.authServer,
@@ -79,7 +79,7 @@ export interface QuoteArgs {
     incomingPaymentId: string;
 }
 
-async function createQuote(authClient: AuthenticatedClient, args: QuoteArgs): Promise<Quote> {
+export async function createQuote(authClient: AuthenticatedClient, args: QuoteArgs): Promise<Quote> {
     let { quoteGrant, senderWalletAddress } = args;
     const quote = await authClient.quote.create(
         {
@@ -100,7 +100,7 @@ export interface OutgoingPaymentGrantArgs {
     quote: Quote;
 }
 
-async function getOutgoingPaymentGrant(authClient: AuthenticatedClient, args: OutgoingPaymentGrantArgs) : Promise<PendingGrant> {
+export async function getOutgoingPaymentGrant(authClient: AuthenticatedClient, args: OutgoingPaymentGrantArgs) : Promise<PendingGrant> {
     let {quote, senderWalletAddress} = args;
     
     const grant = await authClient.grant.request(
@@ -137,7 +137,7 @@ export interface FinaliseOutgoingPaymentGrant {
     continueAccessToken: string;
 }
 
-async function finaliseOutgoingPaymentGrant(authClient: AuthenticatedClient, args: FinaliseOutgoingPaymentGrant) : Promise<Grant | undefined> {
+export async function finaliseOutgoingPaymentGrant(authClient: AuthenticatedClient, args: FinaliseOutgoingPaymentGrant) : Promise<Grant | undefined> {
     let finalizedOutgoingPaymentGrant;
     try {
         finalizedOutgoingPaymentGrant = await authClient.grant.continue({
@@ -158,7 +158,7 @@ export interface OutgoingPaymentArgs {
     quote: Quote;
 }
 
-async function createOutgoingPayment(authClient: AuthenticatedClient, args: OutgoingPaymentArgs) : Promise<OutgoingPaymentWithSpentAmounts> {
+export async function createOutgoingPayment(authClient: AuthenticatedClient, args: OutgoingPaymentArgs) : Promise<OutgoingPaymentWithSpentAmounts> {
     let { quote, senderWalletAddress, access_token } = args;
     const outgoingPayment = await authClient.outgoingPayment.create(
         {
