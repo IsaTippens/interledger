@@ -1,44 +1,46 @@
 import { createAuthenticatedClient, createUnauthenticatedClient } from '@interledger/open-payments';
 import readline from "readline/promises";
+import * as fs from 'fs';
 
-const isa = "";
-const isa_keyid = "";
-const isa_private_key = "";
+const sender = "https://ilp.rafiki.money/allowance";
+const sender_keyid = "8c6e3fdc-7df7-493e-8106-9f5f681d33a3";
+const sender_private_key =  fs.readFileSync('C:/Users/bmawh/Downloads/private.key', 'utf8');
 
 
-const ruchelle = "";
+
+const reciever = "https://ilp.rafiki.money/mmm";
 
 async function main() {
     const client = await createUnauthenticatedClient({});
-    const paymentPointer = ruchelle;
-    const ruchelleWalletAddress = await client.walletAddress.get({
+    const paymentPointer = reciever;
+    const recieverWalletAddress = await client.walletAddress.get({
         url: paymentPointer
     });
 
-    console.log(ruchelleWalletAddress);
-    const isaWalletAddress = await client.walletAddress.get({
-        url: isa
+    console.log(recieverWalletAddress);
+    const senderWalletAddress = await client.walletAddress.get({
+        url: sender
     });
-    console.log(isaWalletAddress);
+    console.log(senderWalletAddress);
 
 
 
     const authClient = await createAuthenticatedClient({
-        keyId: isa_keyid,
-        privateKey: isa_private_key,
-        walletAddressUrl: isa
+        keyId: sender_keyid,
+        privateKey: sender_private_key,
+        walletAddressUrl: sender
     })
 
-    let isaKeys = await authClient.walletAddress.getKeys({
-        url: isa
+    let senderKeys = await authClient.walletAddress.getKeys({
+        url: sender
     });
 
     // not really needed
-    console.log(isaKeys);
+    console.log(senderKeys);
 
     const grant: any = await authClient.grant.request(
         {
-            url: ruchelleWalletAddress.authServer,
+            url: recieverWalletAddress.authServer,
         },
         {
             access_token: {
@@ -56,14 +58,14 @@ async function main() {
 
     const incomingPayment = await authClient.incomingPayment.create(
         {
-            url: ruchelleWalletAddress.resourceServer,
+            url: recieverWalletAddress.resourceServer,
             accessToken: grant.access_token.value,
         },
         {
-            walletAddress: ruchelle,
+            walletAddress: reciever,
             incomingAmount: {
-                value: "1000",
-                assetCode: "USD",
+                value: "50000",
+                assetCode: "JPY",
                 assetScale: 2,
             },
         },
@@ -73,7 +75,7 @@ async function main() {
 
     const quoteGrant: any = await authClient.grant.request(
         {
-            url: isaWalletAddress.authServer,
+            url: senderWalletAddress.authServer,
         },
         {
             access_token: {
@@ -91,12 +93,12 @@ async function main() {
 
     const quote = await authClient.quote.create(
         {
-            url: isaWalletAddress.resourceServer,
+            url: senderWalletAddress.resourceServer,
             accessToken: quoteGrant.access_token.value,
         },
         {
             method: "ilp",
-            walletAddress: isa,
+            walletAddress: sender,
             receiver: incomingPayment.id,
         },
     );
@@ -105,13 +107,13 @@ async function main() {
 
     const outgoingGrantInteract = await authClient.grant.request(
         {
-            url: isaWalletAddress.authServer,
+            url: senderWalletAddress.authServer,
         },
         {
             access_token: {
                 access: [
                     {
-                        identifier: isaWalletAddress.id,
+                        identifier: senderWalletAddress.id,
                         type: "outgoing-payment",
                         actions: ["read", "create"],
                         limits: {
@@ -155,11 +157,11 @@ async function main() {
     
     const outgoingPayment = await authClient.outgoingPayment.create(
         {
-          url: isaWalletAddress.resourceServer,
+          url: senderWalletAddress.resourceServer,
           accessToken: finalizedOutgoingPaymentGrant.access_token.value,
         },
         {
-          walletAddress: isa,
+          walletAddress: sender,
           quoteId: quote.id,
         },
       );

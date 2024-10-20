@@ -15,6 +15,8 @@ const sender_keyid = "";
 const sender_private_key = "";
 
 paymentRouter.post("/start", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+
     let { businessWalletAddress, userWalletAddress, amount } = req.body;
 
     let sender_payment_url = userWalletAddress;
@@ -86,6 +88,8 @@ paymentRouter.post("/start", async (req, res) => {
 // Response: { message: string }
 
 paymentRouter.post("/complete", async (req, res) => {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+
     let { continueData, finalise } = req.body;
     if (typeof continueData !== 'object' || typeof finalise !== 'object') {
         res.status(400).send('Invalid input');

@@ -12,6 +12,8 @@ const router = Router();
 // Response: { businesses: Business[] }
 
 router.get('/businesses', (req, res) => {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+
     const businessRepo = new BusinessRepository(client);
     businessRepo.getBusinesses().then((businesses) => {
         res.json({ businesses });
